@@ -14,29 +14,29 @@ export interface Message {
 export class DataService {
   public messages: Message[] = [
     {
-      fromName: 'Matt Chorsey',
-      subject: 'New event: Trip to Vegas',
+      fromName: 'Ketan Chauhan',
+      subject: 'First ioinc app',
       date: '9:32 AM',
       id: 0,
       read: false
     },
     {
-      fromName: 'Lauren Ruthford',
-      subject: 'Long time no chat',
+      fromName: 'Ionic',
+      subject: 'Hybrid app',
       date: '6:12 AM',
       id: 1,
       read: false
     },
     {
-      fromName: 'Jordan Firth',
-      subject: 'Report Results',
+      fromName: 'Netlify',
+      subject: 'Deploy',
       date: '4:55 AM',
       id: 2,
       read: false
     },
     {
-      fromName: 'Bill Thomas',
-      subject: 'The situation',
+      fromName: 'Holiday',
+      subject: 'Enjoy everyday!!!',
       date: 'Yesterday',
       id: 3,
       read: false
