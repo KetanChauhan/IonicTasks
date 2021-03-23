@@ -1,0 +1,10 @@
+<ion-item *ngIf="task" [routerLink]="'/task/' + task.id" [detail]="false">
+  <div slot="start" [class]="!task.isDone ? 'dot dot-notdone' : 'dot dot-done'"></div>
+  <ion-label class="ion-text-wrap">
+    <h2>
+      {{ task.name }}
+    </h2>
+    <p> Creted on: {{ task.createdOn |  date:'dd/MM/yyyy HH:mm:ss a'}}</p>
+    <p> Modified on: {{ task.modifiedOn |  date:'dd/MM/yyyy HH:mm:ss a'}}</p>
+  </ion-label>
+  </ion-item>
