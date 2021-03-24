@@ -6,14 +6,17 @@ import { ViewTaskComponent } from './view-task.component';
 import { IonicModule } from '@ionic/angular';
 
 import { ViewTaskPageRoutingModule } from './view-task-routing.module';
+import { CreateTaskComponent } from './create-task.component';
+import { HomePageModule } from '../home/home.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViewTaskPageRoutingModule
+    ViewTaskPageRoutingModule,
+    HomePageModule
   ],
-  declarations: [ViewTaskComponent]
+  declarations: [ViewTaskComponent,CreateTaskComponent]
 })
 export class ViewTaskPageModule {}

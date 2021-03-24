@@ -18,7 +18,11 @@ export class ViewTaskComponent implements OnInit {
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.task = this.data.getTaskById(parseInt(id, 10));
+    this.data.getTaskById(parseInt(id, 10)).subscribe(res=>{
+      if(res.success){
+        this.task = res.task;
+      }
+    });
   }
 
   getBackButtonText() {

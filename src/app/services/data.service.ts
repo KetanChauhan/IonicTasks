@@ -23,34 +23,51 @@ export interface TasksResponse {
   tasks: Task[];
 }
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+export interface TaskResponse {
+  success: boolean;
+  task: Task;
 }
+
+export interface OperationResponse{
+  success: boolean,
+  insertedId: number,
+  successMessage: String,
+  errorMessage: String
+}
+
 const baseUrl = "https://ketan-node-tasks.herokuapp.com";
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=UTF-8'})
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  tasks: Task[] = [];
 
   constructor(private http: HttpClient) {
     
-    this.http.get<TasksResponse>(baseUrl + '/task').subscribe(res=>{
-      console.log('tasks ',res);
-      if(res.success) this.tasks = res.tasks;
-    });
   }
 
-  public getTasks(): Task[] {
-      return this.tasks;
+  public getTasks(): Observable<TasksResponse> {
+      return this.http.get<TasksResponse>(baseUrl + '/task');
   }
 
-  public getTaskById(id: number): Task {
-      return this.tasks.find(t=>t.id==id);
+  public getTaskById(id: number): Observable<TaskResponse> {
+      return this.http.get<TaskResponse>(baseUrl + '/task/'+id);
   }
 
+  public createTask(task: Task): Observable<OperationResponse>{
+    return this.http.put<OperationResponse>(baseUrl + '/task',JSON.stringify(task),httpOptions);
+  }
 
+  public updateTask(task: Task): Observable<OperationResponse>{
+    return this.http.post<OperationResponse>(baseUrl + '/task',JSON.stringify(task),httpOptions);
+  }
+
+  public deleteTask(task: Task): Observable<OperationResponse>{
+    return this.http.delete<OperationResponse>(baseUrl + '/task/' + task.id);
+  }
 
 
   public messages: Message[] = [
@@ -59,55 +76,6 @@ export class DataService {
       subject: 'First ioinc app',
       date: '9:32 AM',
       id: 0,
-      read: false
-    },
-    {
-      fromName: 'Ionic',
-      subject: 'Hybrid app',
-      date: '6:12 AM',
-      id: 1,
-      read: false
-    },
-    {
-      fromName: 'Netlify',
-      subject: 'Deploy',
-      date: '4:55 AM',
-      id: 2,
-      read: false
-    },
-    {
-      fromName: 'Holiday',
-      subject: 'Enjoy everyday!!!',
-      date: 'Yesterday',
-      id: 3,
-      read: false
-    },
-    {
-      fromName: 'Joanne Pollan',
-      subject: 'Updated invitation: Swim lessons',
-      date: 'Yesterday',
-      id: 4,
-      read: false
-    },
-    {
-      fromName: 'Andrea Cornerston',
-      subject: 'Last minute ask',
-      date: 'Yesterday',
-      id: 5,
-      read: false
-    },
-    {
-      fromName: 'Moe Chamont',
-      subject: 'Family Calendar - Version 1',
-      date: 'Last Week',
-      id: 6,
-      read: false
-    },
-    {
-      fromName: 'Kelly Richardson',
-      subject: 'Placeholder Headhots',
-      date: 'Last Week',
-      id: 7,
       read: false
     }
   ];

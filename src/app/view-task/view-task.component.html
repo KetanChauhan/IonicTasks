@@ -1,14 +1,14 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons>
       <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
+      <ion-title>Task</ion-title>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" *ngIf="task">
   <ion-item>
-    <ion-icon name="person-circle" color="primary"></ion-icon>
     <ion-label class="ion-text-wrap">
       <h2>
         {{ task.name }}
@@ -17,7 +17,6 @@
   </ion-item>
   
   <div class="ion-padding">
-    <h1>{{ task.name }}</h1>
     <p> Is completed: {{ task.isDone }}</p>
     <p> Creted on: {{ task.createdOn |  date:'dd/MM/yyyy HH:mm:ss a'}}</p>
     <p> Modified on: {{ task.modifiedOn |  date:'dd/MM/yyyy HH:mm:ss a'}}</p>

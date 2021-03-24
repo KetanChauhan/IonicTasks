@@ -1,25 +1,30 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tasks
-    </ion-title>
+  <ion-toolbar color="primary">
+    <ion-searchbar showCancelButton="focus" placeholder="Tasks" (ionChange)="performSearch($event.target.value)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" (activate)="onActivateRoute()">
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">
-        Tasks
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-list>
-    <app-task *ngFor="let task of getTasks()" [task]="task"></app-task>
+
+  <ion-list *ngIf="!isLoading">
+    <app-task *ngFor="let task of getTasks()" [task]="task" (refreshData)="refreshData()"></app-task>
   </ion-list>
+  
+  <ion-list *ngIf="isLoading">
+    <ion-item *ngFor="let i of [].constructor(10)">
+      <ion-skeleton-text animated style="width: 27px; height: 27px" slot="start"></ion-skeleton-text>
+      <ion-skeleton-text animated></ion-skeleton-text>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
+
+<ion-footer>
+  <ion-fab-button color="primary" [routerLink]="'/task/create'">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-footer>

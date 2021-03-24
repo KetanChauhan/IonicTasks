@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons>
+      <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
+      <ion-title>
+        {{ isUpdate ? 'Update' : 'Create' }} Task
+      </ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-label class="ion-text-wrap" position="floating">Task name</ion-label>
+    <ion-input [(ngModel)]="task.name"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="isUpdate">
+    <ion-label class="ion-text-wrap" position="fixed">Is completed</ion-label>
+    <ion-checkbox [(ngModel)]="task.isDone" color="primary"></ion-checkbox>
+  </ion-item>
+  <ion-list style="text-align:center">
+    <ion-button size="default" (click)="isUpdate ? updateTask() : createTask()">{{ isUpdate ? 'Update' : 'Create' }}</ion-button>
+    <ion-button color="danger" size="default" (click)="cancel()">Cancel</ion-button>
+  </ion-list>
+</ion-content>

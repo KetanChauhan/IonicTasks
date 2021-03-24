@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { IonRouterOutlet, Platform } from '@ionic/angular';
 import { DataService, Message, Task } from '../services/data.service';
+import { Plugins } from '@capacitor/core';
 
 @Component({
   selector: 'app-home',
@@ -7,14 +9,47 @@ import { DataService, Message, Task } from '../services/data.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  tasks : Task[] = [];
+  showingTasks : Task[] = [];
+  isLoading: boolean = true;
 
-  constructor(private data: DataService) {
+  constructor(
+    private data: DataService,
+    private platform: Platform,
+    private routerOutlet: IonRouterOutlet) {
+
+      console.log('constructor');
+      this.platform.backButton.subscribeWithPriority(-1, () => {
+        if (!this.routerOutlet.canGoBack()) {
+          Plugins.App.exitApp();
+        }
+      });
+  }
+  
+  ionViewWillEnter() {
+    this.refreshData();
   }
 
   refresh(ev) {
-    setTimeout(() => {
+    this.data.getTasks().subscribe(res=>{
+      if(res.success){
+        this.tasks = res.tasks;
+        this.showingTasks = this.tasks;
+        this.isLoading = false;
+      }
       ev.detail.complete();
-    }, 3000);
+    });
+  }
+
+  refreshData() {
+    console.log('refreshData');
+    this.data.getTasks().subscribe(res=>{
+      if(res.success){
+        this.tasks = res.tasks;
+        this.showingTasks = this.tasks;
+        this.isLoading = false;
+      }
+    });
   }
 
   getMessages(): Message[] {
@@ -22,7 +57,22 @@ export class HomePage {
   }
 
   getTasks(): Task[] {
-    return this.data.getTasks();
+    return this.showingTasks;
+  }
+
+  performSearch(val: string){
+    val = val.trim().toLocaleLowerCase();
+    console.log('search ',val);
+    if(val==null || val==undefined || val.length==0){
+      this.showingTasks = this.tasks;
+    }else{
+      this.showingTasks = this.tasks.filter(t=>{
+        if(t.name.toLocaleLowerCase().includes(val)){
+          return true;
+        }
+        return false;
+      })
+    }
   }
 
 }
