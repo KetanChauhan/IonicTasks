@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DataService, Task } from '../services/data.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { Task } from '../services/data.service';
 
 @Component({
   selector: 'app-view-task',
@@ -8,27 +8,25 @@ import { DataService, Task } from '../services/data.service';
   styleUrls: ['./view-task.component.scss'],
 })
 export class ViewTaskComponent implements OnInit {
-
-  public task: Task;
+  @Input() task: Task;
 
   constructor(
-    private data: DataService,
-    private activatedRoute: ActivatedRoute
+    public modalController: ModalController
   ) { }
 
   ngOnInit() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.data.getTaskById(parseInt(id, 10)).subscribe(res=>{
-      if(res.success){
-        this.task = res.task;
-      }
-    });
   }
 
   getBackButtonText() {
     const win = window as any;
     const mode = win && win.Ionic && win.Ionic.mode;
     return mode === 'ios' ? 'Tasks' : '';
+  }
+
+  dismiss(){
+    this.modalController.dismiss({
+      'dismissed': true
+    });
   }
 
 }

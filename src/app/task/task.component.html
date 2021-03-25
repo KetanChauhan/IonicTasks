@@ -1,4 +1,4 @@
-<ion-item *ngIf="task" [detail]="false" [routerLink]="'/task/' + task.id">
+<ion-item *ngIf="task" [detail]="false" (click)="presentTaskDetails()" [routerLink]="">
   <ion-checkbox [(ngModel)]="task.isDone" [checked]="task.isDone" color="primary" 
     (click)="$event.stopPropagation();" (ionChange)="performUpdateTask()" [routerLink]=""></ion-checkbox>
   <ion-label class="ion-text-wrap">
@@ -6,7 +6,8 @@
       {{ task.name }}
     </h2>
   </ion-label>
-  <ion-icon name="create" color="primary" (click)="$event.stopPropagation();" [routerLink]="'/task/update/' + task.id" aria-placeholder="Update"></ion-icon>
-  <ion-icon name="trash" color="danger" (click)="performDeleteTask($event)" [routerLink]=""></ion-icon>
+  <ion-icon name="ellipsis-vertical" color="primary" (click)="presentActionSheet($event)" [routerLink]=""></ion-icon>
+  <!-- <ion-icon name="create" color="primary" (click)="$event.stopPropagation();" [routerLink]="'/task/update/' + task.id" aria-placeholder="Update"></ion-icon>
+  <ion-icon name="trash" color="danger" (click)="performDeleteTask($event)" [routerLink]=""></ion-icon> -->
 
 </ion-item>

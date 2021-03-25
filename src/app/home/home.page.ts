@@ -12,6 +12,7 @@ export class HomePage {
   tasks : Task[] = [];
   showingTasks : Task[] = [];
   isLoading: boolean = true;
+  searchTerm: string = '';
 
   constructor(
     private data: DataService,
@@ -36,6 +37,7 @@ export class HomePage {
         this.tasks = res.tasks;
         this.showingTasks = this.tasks;
         this.isLoading = false;
+        this.searchTerm = '';
       }
       ev.detail.complete();
     });
@@ -48,6 +50,7 @@ export class HomePage {
         this.tasks = res.tasks;
         this.showingTasks = this.tasks;
         this.isLoading = false;
+        this.searchTerm = '';
       }
     });
   }
